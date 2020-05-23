@@ -4,10 +4,12 @@ import epi.ListNode;
 
 public class Primer {
 
+    // search for a node in linked list
     public static <T> ListNode<T> search(ListNode<T> head, T key){
         return null;
     }
 
+    // friendly print linked list
     public static <T> void printList(ListNode<T> head){
         ListNode<T> current = head;
         while(current != null){
@@ -17,6 +19,7 @@ public class Primer {
         System.out.print("null");
     }
 
+    // reverse a linked list
     public static <T> ListNode<T> reverse(ListNode<T> head){
         ListNode<T> current = head;
         ListNode<T> prev = null;

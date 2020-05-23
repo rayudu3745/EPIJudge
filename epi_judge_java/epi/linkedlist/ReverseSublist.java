@@ -12,18 +12,24 @@ public class ReverseSublist {
 
     ListNode<Integer> nodeBeforeSubList = null;
     ListNode<Integer> current = L,head = L;
+
+    //find node before sublist and head of sublist
     for(int i = 0; i < start-1; i++){
       nodeBeforeSubList = current;
       current = current.next;
     }
     ListNode<Integer> headOfSublist = current;
     ListNode<Integer> prev = null;
+
+    // reverse the sublist
     for(int i=0; i< finish - start + 1; i++){
       ListNode<Integer> next = current.next;
       current.next = prev;
       prev = current;
       current = next;
     }
+
+    //rewire the pointers
     if(nodeBeforeSubList != null){
       nodeBeforeSubList.next = prev;
     }else {

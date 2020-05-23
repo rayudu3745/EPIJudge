@@ -1,12 +1,49 @@
-package epi;
+package epi.linkedlist;
+import epi.ListNode;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
+
+import java.util.List;
+
 public class IsListCyclic {
 
   public static ListNode<Integer> hasCycle(ListNode<Integer> head) {
-    // TODO - you fill in here.
+    ListNode<Integer> slow = head, fast = head;
+
+    // two pointers one twice as fast as the other
+    // if there is cycle they meet at some point on the cylce
+    while(fast != null && fast.next != null){
+      slow = slow.next;
+      fast = fast.next.next;
+      int cycleLenth = 0;
+
+      // find the lenth of the cycle
+      if(slow == fast){
+        cycleLenth = 1;
+        fast = fast.next;
+        while(slow != fast){
+          fast = fast.next;
+          cycleLenth++;
+        }
+
+        // advance a pointer cylce lenth advance from start
+        ListNode<Integer> cycleLenthAdvance = head;
+        while(cycleLenth > 0){
+          cycleLenthAdvance = cycleLenthAdvance.next;
+          cycleLenth--;
+        }
+
+        // now the two new pointer meet at the start of the cycle
+        ListNode<Integer> iter = head;
+        while(iter != cycleLenthAdvance){
+          iter = iter.next;
+          cycleLenthAdvance =cycleLenthAdvance.next;
+        }
+        return iter;
+      }
+    }
     return null;
   }
   @EpiTest(testDataFile = "is_list_cyclic.tsv")
