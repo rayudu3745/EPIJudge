@@ -1,4 +1,5 @@
-package epi;
+package epi.linkedlist;
+import epi.ListNode;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TimedExecutor;
@@ -6,7 +7,12 @@ public class DeleteNodeFromList {
 
   // Assumes nodeToDelete is not tail.
   public static void deletionFromList(ListNode<Integer> nodeToDelete) {
-    // TODO - you fill in here.
+
+    // delete the next node instead of given node and
+    // copy the next node data to the given node
+    ListNode<Integer> nextNode = nodeToDelete.next;
+    nodeToDelete.next = nextNode.next;
+    nodeToDelete.data = nextNode.data;
     return;
   }
   @EpiTest(testDataFile = "delete_node_from_list.tsv")
