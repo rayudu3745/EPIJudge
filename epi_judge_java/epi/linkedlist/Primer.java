@@ -32,6 +32,16 @@ public class Primer {
         return prev;
     }
 
+    public static <T> int size(ListNode<T> head){
+        int size = 0;
+        ListNode<T> curr = head;
+        while (curr != null){
+            curr = curr.next;
+            size++;
+        }
+        return size;
+    }
+
     public static ListNode<Integer> sampleList(){
         ListNode<Integer> node1 = new ListNode(11,null);
         ListNode<Integer> node2 = new ListNode(3,null);
