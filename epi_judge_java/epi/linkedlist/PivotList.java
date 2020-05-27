@@ -1,4 +1,5 @@
-package epi;
+package epi.linkedlist;
+import epi.ListNode;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
@@ -10,8 +11,38 @@ import java.util.List;
 public class PivotList {
 
   public static ListNode<Integer> listPivoting(ListNode<Integer> l, int x) {
-    // TODO - you fill in here.
-    return null;
+
+    if(l == null || l.next == null) return l;
+
+    //create three dummy nodes for start of three lists(less,equal,greater)
+    // and three pointers for pointing to current pointer in that list
+    ListNode<Integer> lessDummyHead = new ListNode<>(0,null);
+    ListNode<Integer> equalDummyHead = new ListNode<>(0,null);
+    ListNode<Integer> greaterDummyHead = new ListNode<>(0,null);
+    ListNode<Integer> currLess = lessDummyHead, currEqual = equalDummyHead, currGreater = greaterDummyHead;
+
+    // iterate through the list and add the node to appropriate list
+    ListNode<Integer> current = l;
+    while (current != null){
+      if(current.data.intValue() < x){
+        currLess.next = current;
+        currLess = currLess.next;
+      }else if (current.data.intValue() > x){
+        currGreater.next = current;
+        currGreater = currGreater.next;
+      }else {
+        currEqual.next = current;
+        currEqual = currEqual.next;
+      }
+      current = current.next;
+    }
+
+    // add three lists
+    currGreater.next = null;
+    currEqual.next = greaterDummyHead.next;
+    currLess.next = equalDummyHead.next;
+
+    return lessDummyHead.next;
   }
   public static List<Integer> linkedToList(ListNode<Integer> l) {
     List<Integer> v = new ArrayList<>();
