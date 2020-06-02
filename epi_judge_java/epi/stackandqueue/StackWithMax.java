@@ -1,29 +1,48 @@
-package epi;
+package epi.stackandqueue;
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
+import java.util.Deque;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
 public class StackWithMax {
 
+  //tuple with the element and max
+  public static class ElementWithCachedMax{
+    public Integer element;
+    public Integer max;
+
+    public ElementWithCachedMax(Integer element, Integer max){
+      this.element = element;
+      this.max = max;
+    }
+  }
+
+  //at every node along with the element
+  // we will also store the max value until that point in stack from bottom
   public static class Stack {
+    private final Deque<ElementWithCachedMax> elementWithCachedMax = new LinkedList<>();
     public boolean empty() {
-      // TODO - you fill in here.
-      return true;
+      return elementWithCachedMax.isEmpty();
     }
     public Integer max() {
-      // TODO - you fill in here.
-      return 0;
+      if(empty()){
+        throw new IllegalStateException("max(): empty stack");
+      }
+      return elementWithCachedMax.peek().max;
     }
     public Integer pop() {
-      // TODO - you fill in here.
-      return 0;
+      if(empty()){
+        throw new IllegalStateException("pop(): empty stack");
+      }
+      return elementWithCachedMax.removeFirst().element;
     }
     public void push(Integer x) {
-      // TODO - you fill in here.
-      return;
+      int max = empty() ? x : Math.max(x,max());
+      elementWithCachedMax.addFirst(new ElementWithCachedMax(x, max));
     }
   }
   @EpiUserType(ctorParams = {String.class, int.class})
