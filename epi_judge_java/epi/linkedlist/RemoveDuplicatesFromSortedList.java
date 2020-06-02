@@ -18,7 +18,7 @@ public class RemoveDuplicatesFromSortedList {
     while(currentModified != null){
 
         // find next non duplicate node or end of list
-        while (currentMoving != null && currentMoving.data == currentModified.data){
+        while (currentMoving != null && currentMoving.data.equals(currentModified.data)){
           currentMoving = currentMoving.next;
         }
 

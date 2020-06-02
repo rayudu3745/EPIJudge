@@ -15,36 +15,31 @@ public class IntAsListAdd {
     // iterate both lists simultaneously and add them + carry of previous addition
     // until one list is complete
     int carry = 0;
-    ListNode<Integer> current1 = L1;
-    ListNode<Integer> current2 = L2;
 
-    while (current1 != null && current2 != null){
-      int sum = current1.data.intValue() + current2.data.intValue() + carry;
+    while (L1 != null && L2 != null){
+      int sum = L1.data + L2.data + carry;
       carry = sum / 10;
-      ListNode<Integer> newNode = new ListNode<>(Math.floorMod(sum,10),null);
-      current.next = newNode;
+      current.next = new ListNode<>(sum % 10,null);
       current = current.next;
-      current1 = current1.next;
-      current2 = current2.next;
+      L1 = L1.next;
+      L2 = L2.next;
     }
 
     // remaining part of the big list and carry from previous addition are left now
-    ListNode<Integer> remaining = current1 == null ? current2 : current1;
+    ListNode<Integer> remaining = L1 == null ? L2 : L1;
 
     // carry the same process as above for the remaining part with carry
     while (remaining != null){
-      int sum = remaining.data.intValue() + carry;
+      int sum = remaining.data + carry;
       carry = sum / 10;
-      ListNode<Integer> newNode = new ListNode<>(Math.floorMod(sum,10),null);
-      current.next = newNode;
+      current.next = new ListNode<>(sum % 10,null);
       current = current.next;
       remaining = remaining.next;
     }
 
     // if carry if not 0 add that extra node
     if(carry > 0){
-      ListNode<Integer> newNode = new ListNode<>(carry,null);
-      current.next = newNode;
+      current.next = new ListNode<>(carry,null);
     }
 
     return dummy.next;

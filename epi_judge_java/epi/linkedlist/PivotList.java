@@ -24,10 +24,10 @@ public class PivotList {
     // iterate through the list and add the node to appropriate list
     ListNode<Integer> current = l;
     while (current != null){
-      if(current.data.intValue() < x){
+      if(current.data < x){
         currLess.next = current;
         currLess = currLess.next;
-      }else if (current.data.intValue() > x){
+      }else if (current.data > x){
         currGreater.next = current;
         currGreater = currGreater.next;
       }else {
