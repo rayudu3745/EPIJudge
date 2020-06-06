@@ -1,32 +1,89 @@
-package epi;
+package epi.stackandqueue;
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 public class CircularQueue {
 
   public static class Queue {
-    public Queue(int capacity) {}
+
+    // array to store the queue elements
+    private int[] elements;
+
+    // head is index of front element of array
+    private int head;
+
+    // tail is current empty spot in the array
+    private int tail;
+
+    // size of the queue(no. of elements in the queue)
+    private int size;
+
+    public Queue(int capacity) {
+      elements = new int[capacity];
+      head = 0;
+      tail = 0;
+      size = 0;
+    }
+
     public void enqueue(Integer x) {
-      // TODO - you fill in here.
-      return;
+
+      // if size == capacity then resize the array
+      if(size == elements.length){
+
+        int[] newArray = new int[2 * size];
+        // circulary copy the contents of old array to new array
+        // making again head pointing to 0
+        // and tail to size
+        System.arraycopy(elements,head,newArray,0,size - head);
+        System.arraycopy(elements,0,newArray,size - head, head);
+        head = 0;
+        tail = elements.length;
+        elements = newArray;
+
+      }else if (tail == elements.length){
+        // array is not full but tail is out of range
+        // so make tail point to 0 index
+        tail = 0;
+      }
+
+      // add element at tail and increment tail
+      elements[tail] = x;
+      tail++;
+      size++;
+
     }
+
     public Integer dequeue() {
-      // TODO - you fill in here.
-      return 0;
+      if(size < 1) throw new IllegalStateException("queue is empty");
+
+      // element to remove
+      int elem = elements[head];
+
+      // point head to next element int the queue
+      head++;
+      // if head goes out of range means point to 0
+      if(head == elements.length) head = 0;
+      size--;
+      return elem;
     }
+
     public int size() {
-      // TODO - you fill in here.
-      return 0;
+      return size;
     }
+
     @Override
     public String toString() {
-      // TODO - you fill in here.
+      // not implemented
       return super.toString();
     }
+
   }
+
   @EpiUserType(ctorParams = {String.class, int.class})
   public static class QueueOp {
     public String op;
