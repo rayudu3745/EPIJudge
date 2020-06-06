@@ -1,23 +1,44 @@
-package epi;
+package epi.stackandqueue;
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Stack;
+
 public class QueueFromStacks {
 
   public static class Queue {
+
+    // use one stack for enqueueing elements
+    Stack<Integer> enque = new Stack<>();
+    // one for dequeueing
+    Stack<Integer> deque = new Stack<>();
+
     public void enqueue(Integer x) {
-      // TODO - you fill in here.
-      return;
+      enque.push(x);
     }
+
     public Integer dequeue() {
-      // TODO - you fill in here.
-      return 0;
+
+      // if both stacks are empty
+      if(deque.empty() && enque.empty()) throw new IllegalStateException("queue is empty");
+
+      // if deque is empty them pop all the elements from enque stack and populate deque stack
+      // now the deque stack will pop elements in FIFO order
+      if(deque.empty()){
+        while (!enque.empty()){
+          deque.push(enque.pop());
+        }
+      }
+
+      return deque.pop();
     }
   }
+
   @EpiUserType(ctorParams = {String.class, int.class})
   public static class QueueOp {
     public String op;
