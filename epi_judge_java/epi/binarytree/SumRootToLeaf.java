@@ -10,6 +10,27 @@ public class SumRootToLeaf {
   @EpiTest(testDataFile = "sum_root_to_leaf.tsv")
 
   public static int sumRootToLeaf(BinaryTreeNode<Integer> tree) {
+    return partialSum(tree,0);
+  }
+
+  private static int partialSum(BinaryTreeNode<Integer> node, int sumTotheNode){
+
+    if(node == null) return 0;
+
+    sumTotheNode = sumTotheNode * 2 + node.data; // sum after including the current node
+
+    // if leaf return with the sum
+    if(node.left == null && node.right == null){
+      return sumTotheNode;
+    }
+
+    // move to the subtree with new pathsum
+    return partialSum(node.left, sumTotheNode) + partialSum(node.right,sumTotheNode);
+
+  }
+
+
+  private static int method1(BinaryTreeNode<Integer> tree){
 
     if(tree == null) return 0;
 
