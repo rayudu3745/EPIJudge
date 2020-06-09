@@ -16,10 +16,7 @@ public class PathSum {
     // if the current node is leaf
     // current remaining weight should equal the leaf data
     if(node.left == null && node.right == null) {
-      if(node.data.equals(remainingWeight)){
-        return true;
-      }
-      return false;
+      return node.data.equals(remainingWeight);
     }
 
     // move towards the subtree after removing current weight from remaining weight
