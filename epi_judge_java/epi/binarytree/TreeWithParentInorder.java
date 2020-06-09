@@ -1,14 +1,30 @@
-package epi;
+package epi.binarytree;
+import epi.BinaryTree;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 
+import java.util.ArrayList;
 import java.util.List;
 public class TreeWithParentInorder {
   @EpiTest(testDataFile = "tree_with_parent_inorder.tsv")
 
   public static List<Integer> inorderTraversal(BinaryTree<Integer> tree) {
-    // TODO - you fill in here.
-    return null;
+
+    List<Integer> result = new ArrayList<>();
+    if(tree == null) return result;
+
+    // find the first node
+    BinaryTree<Integer> curr = tree;
+    while (curr.left != null){
+      curr = curr.left;
+    }
+
+    // keep finding the successor of the current
+    while (curr != null){
+      result.add(curr.data);
+      curr = SuccessorInTree.findSuccessor(curr);
+    }
+    return result;
   }
 
   public static void main(String[] args) {
