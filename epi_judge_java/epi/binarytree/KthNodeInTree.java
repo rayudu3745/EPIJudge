@@ -1,4 +1,6 @@
-package epi;
+package epi.binarytree;
+import epi.BinaryTree;
+import epi.TreeLike;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
@@ -35,8 +37,28 @@ public class KthNodeInTree {
 
   public static BinaryTreeNode<Integer>
   findKthNodeBinaryTree(BinaryTreeNode<Integer> tree, int k) {
-    // TODO - you fill in here.
-    return null;
+
+    if(tree == null) return null;
+
+    int size = tree.size;
+
+    // check if kth node in left subtree or right subtree
+    int rightSubtreeSize = tree.right != null ? tree.right.size : 0;
+
+    int leftSubtreeSizeIncludingRoot = size - rightSubtreeSize;
+
+    // if the current node is at kth position
+    if(leftSubtreeSizeIncludingRoot == k) return tree;
+
+    if(leftSubtreeSizeIncludingRoot > k) {
+      // number of nodes in left subtree are more than k
+      // so kth node will be found in the tree
+      return findKthNodeBinaryTree(tree.left,k);
+    }else {
+      // nth node in right subtree will be leftSubtreeSizeIncludingRoot + nth node in tree
+      return findKthNodeBinaryTree(tree.right, k - leftSubtreeSizeIncludingRoot);
+    }
+
   }
   public static BinaryTreeNode<Integer>
   convertToTreeWithSize(BinaryTree<Integer> original) {
