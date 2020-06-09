@@ -10,6 +10,7 @@ public class SumRootToLeaf {
   @EpiTest(testDataFile = "sum_root_to_leaf.tsv")
 
   public static int sumRootToLeaf(BinaryTreeNode<Integer> tree) {
+    // two way recursion
     return partialSum(tree,0);
   }
 
