@@ -1,4 +1,5 @@
-package epi;
+package epi.binarytree;
+import epi.BinaryTreeNode;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
@@ -9,10 +10,25 @@ import java.util.Collections;
 import java.util.List;
 public class TreeConnectLeaves {
 
+  private static List<BinaryTreeNode<Integer>> leaves;
+
   public static List<BinaryTreeNode<Integer>>
   createListOfLeaves(BinaryTreeNode<Integer> tree) {
-    // TODO - you fill in here.
-    return Collections.emptyList();
+    leaves = new ArrayList<>();
+    inorderRecurse(tree);
+    return leaves;
+  }
+
+  private static void inorderRecurse(BinaryTreeNode<Integer> node){
+
+    // base case
+    if(node == null) return;
+
+    // if the current node is leaf then add it to the leaves
+    if(node.left == null && node.right == null) leaves.add(node);
+
+    inorderRecurse(node.left);
+    inorderRecurse(node.right);
   }
   @EpiTest(testDataFile = "tree_connect_leaves.tsv")
   public static List<Integer>
