@@ -10,16 +10,14 @@ import java.util.Collections;
 import java.util.List;
 public class TreeConnectLeaves {
 
-  private static List<BinaryTreeNode<Integer>> leaves;
-
   public static List<BinaryTreeNode<Integer>>
   createListOfLeaves(BinaryTreeNode<Integer> tree) {
-    leaves = new ArrayList<>();
-    inorderRecurse(tree);
+    List<BinaryTreeNode<Integer>> leaves = new ArrayList<>();
+    inorderRecurse(tree,leaves);
     return leaves;
   }
 
-  private static void inorderRecurse(BinaryTreeNode<Integer> node){
+  private static void inorderRecurse(BinaryTreeNode<Integer> node, List<BinaryTreeNode<Integer>> leaves){
 
     // base case
     if(node == null) return;
@@ -27,8 +25,8 @@ public class TreeConnectLeaves {
     // if the current node is leaf then add it to the leaves
     if(node.left == null && node.right == null) leaves.add(node);
 
-    inorderRecurse(node.left);
-    inorderRecurse(node.right);
+    inorderRecurse(node.left,leaves);
+    inorderRecurse(node.right,leaves);
   }
   @EpiTest(testDataFile = "tree_connect_leaves.tsv")
   public static List<Integer>
