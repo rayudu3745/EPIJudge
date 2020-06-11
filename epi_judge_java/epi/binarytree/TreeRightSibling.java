@@ -1,4 +1,6 @@
-package epi;
+package epi.binarytree;
+import epi.BinaryTree;
+import epi.TreeLike;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TimedExecutor;
@@ -30,9 +32,23 @@ public class TreeRightSibling {
   }
 
   public static void constructRightSibling(BinaryTreeNode<Integer> tree) {
-    // TODO - you fill in here.
-    return;
+
+    if(tree == null) return;
+
+    // from the current node set the right siblings of the childs
+    if(tree.left == null && tree.right == null) return;
+
+    // right sibling of a left child is right child of the node
+    tree.left.next = tree.right;
+
+    // right sibling of the right child is left node of the roots right sibling
+    if(tree.next != null) tree.right.next = tree.next.left;
+
+    // recurse in order
+    constructRightSibling(tree.left);
+    constructRightSibling(tree.right);
   }
+
   private static BinaryTreeNode<Integer>
   cloneTree(BinaryTree<Integer> original) {
     if (original == null) {
