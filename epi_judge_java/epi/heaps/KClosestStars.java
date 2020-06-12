@@ -1,13 +1,11 @@
-package epi;
+package epi.heaps;
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiTestComparator;
 import epi.test_framework.EpiTestExpectedType;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 import java.util.function.BiPredicate;
 public class KClosestStars {
   @EpiUserType(ctorParams = {double.class, double.class, double.class})
@@ -35,8 +33,34 @@ public class KClosestStars {
   }
 
   public static List<Star> findClosestKStars(Iterator<Star> stars, int k) {
-    // TODO - you fill in here.
-    return Collections.emptyList();
+
+    List<Star> kclosest = new ArrayList<>();
+
+    // use a max heap to store the current k closest starts
+    // when processing a new star check if its closer than the farthest start in heap
+    PriorityQueue<Star> maxHeap = new PriorityQueue<>(Collections.reverseOrder());
+
+    // add the first k stars
+    while (stars.hasNext() && k > 0){
+      maxHeap.add(stars.next());
+      k--;
+    }
+
+    // when processing a new star check if its closer than the farthest start in heap
+    while (stars.hasNext()){
+      Star currStar  = stars.next();
+      if(currStar.distance() < maxHeap.peek().distance()) {
+        maxHeap.poll();
+        maxHeap.add(currStar);
+      }
+    }
+
+    // now the maxHeap will have k closest starts
+    while (!maxHeap.isEmpty()){
+      kclosest.add(maxHeap.poll());
+    }
+
+    return kclosest;
   }
   @EpiTest(testDataFile = "k_closest_stars.tsv")
   public static List<Star> findClosestKStarsWrapper(List<Star> stars, int k) {
