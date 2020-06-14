@@ -1,16 +1,39 @@
-package epi;
+package epi.searching;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 import epi.test_framework.TimedExecutor;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
+
 public class SearchEntryEqualToIndex {
 
   public static int searchEntryEqualToItsIndex(List<Integer> A) {
-    // TODO - you fill in here.
-    return 0;
+
+    int L = 0, U = A.size() - 1;
+
+    while (L <= U){
+
+      int M = L + (U - L) / 2;
+
+      if(A.get(M) < M) {
+        // it can't lie in the first half
+        L = M + 1;
+      }else if (A.get(M) > M){
+        // it can't lie in the second half
+        U = M - 1;
+      }else {
+        // equal
+        return M;
+      }
+    }
+
+   return -1;
   }
+
   @EpiTest(testDataFile = "search_entry_equal_to_index.tsv")
   public static void searchEntryEqualToItsIndexWrapper(TimedExecutor executor,
                                                        List<Integer> A)
