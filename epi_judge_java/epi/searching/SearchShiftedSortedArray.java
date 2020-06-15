@@ -1,4 +1,4 @@
-package epi;
+package epi.searching;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 
@@ -7,8 +7,23 @@ public class SearchShiftedSortedArray {
   @EpiTest(testDataFile = "search_shifted_sorted_array.tsv")
 
   public static int searchSmallest(List<Integer> A) {
-    // TODO - you fill in here.
-    return 0;
+
+    int L = 0, U = A.size() - 1;
+
+    while (L < U){
+
+      int M = L + (U - L) / 2;
+
+      if(A.get(M) > A.get(U)){
+        // minimum must lie between M and U
+        L = M + 1;
+      } else {
+        // minimum must lie in L and M inclusive
+        U = M;
+      }
+    }
+    //loop end
+    return L;
   }
 
   public static void main(String[] args) {
