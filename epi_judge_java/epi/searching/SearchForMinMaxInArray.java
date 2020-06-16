@@ -1,4 +1,4 @@
-package epi;
+package epi.searching;
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
@@ -46,8 +46,28 @@ public class SearchForMinMaxInArray {
   @EpiTest(testDataFile = "search_for_min_max_in_array.tsv")
 
   public static MinMax findMinMax(List<Integer> A) {
-    // TODO - you fill in here.
-    return new MinMax(0, 0);
+
+    if(A == null || A.isEmpty()) return null;
+
+    if(A.size() == 1) return new MinMax(A.get(0),A.get(0));
+
+    // find min and max between pairs
+    MinMax globalMinMax = MinMax.minMax(A.get(0), A.get(1));
+
+    for (int i = 2; i + 1 < A.size(); i++){
+      MinMax localTopair = MinMax.minMax(A.get(i), A.get(i + 1));
+      globalMinMax = new MinMax(Math.min(globalMinMax.smallest, localTopair.smallest),
+              Math.max(globalMinMax.largest, localTopair.largest));
+    }
+
+    // if there are odd number of elements
+    // one will be left out of pair
+    if(A.size() % 2 != 0){
+      globalMinMax = new MinMax(Math.min(globalMinMax.smallest, A.get(A.size() - 1)),
+              Math.max(globalMinMax.largest, A.get(A.size() - 1)));
+    }
+
+    return globalMinMax;
   }
 
   public static void main(String[] args) {
