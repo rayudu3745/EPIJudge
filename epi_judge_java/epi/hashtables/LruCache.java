@@ -1,25 +1,43 @@
-package epi;
+package epi.hashtables;
 import epi.test_framework.EpiTest;
 import epi.test_framework.EpiUserType;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 public class LruCache {
-  LruCache(final int capacity) {}
+
+  // using a linked hashmap as lru cache
+  private LinkedHashMap<Integer,Integer> lruCache ;
+
+  LruCache(final int capacity) {
+
+    lruCache = new LinkedHashMap<>(capacity, 1.0f, true){
+
+      // this method will specify to remove the eldest entry when capacity is full
+      @Override
+      protected boolean removeEldestEntry(Map.Entry<Integer, Integer> eldest) {
+        return this.size() > capacity;
+      }
+    };
+
+  }
+
   public Integer lookup(Integer key) {
-    // TODO - you fill in here.
-    return 0;
+    return lruCache.getOrDefault(key, -1);
   }
+
   public void insert(Integer key, Integer value) {
-    // TODO - you fill in here.
-    return;
+    lruCache.putIfAbsent(key, value);
   }
+
   public Boolean erase(Object key) {
-    // TODO - you fill in here.
-    return true;
+    return lruCache.remove(key) != null;
   }
+
   @EpiUserType(ctorParams = {String.class, int.class, int.class})
   public static class Op {
     String code;
