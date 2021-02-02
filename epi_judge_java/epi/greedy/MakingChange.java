@@ -1,12 +1,17 @@
-package epi;
+package epi.greedy;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 public class MakingChange {
   @EpiTest(testDataFile = "making_change.tsv")
 
   public static int changeMaking(int cents) {
-    // TODO - you fill in here.
-    return 0;
+    final int[] COINS = {100, 50 , 25, 10, 5, 1};
+    int numCoins = 0;
+    for (int i = 0; i < COINS.length; i++){
+      numCoins += cents / COINS[i];
+      cents  = cents % COINS[i];
+    }
+    return numCoins;
   }
 
   public static void main(String[] args) {
