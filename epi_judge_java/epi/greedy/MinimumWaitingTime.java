@@ -1,14 +1,25 @@
-package epi;
+package epi.greedy;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 
+import java.util.Collections;
 import java.util.List;
 public class MinimumWaitingTime {
   @EpiTest(testDataFile = "minimum_waiting_time.tsv")
 
   public static int minimumTotalWaitingTime(List<Integer> serviceTimes) {
-    // TODO - you fill in here.
-    return 0;
+
+    // greedy select the min service time
+    // correctness proof use exchange argument
+
+    int waitingTimeTotal = 0;
+    int waitingTime = 0;
+    Collections.sort(serviceTimes);
+    for (int i = 1 ; i < serviceTimes.size(); i++){
+      waitingTime = waitingTime + serviceTimes.get(i - 1);
+      waitingTimeTotal += waitingTime;
+    }
+    return waitingTimeTotal;
   }
 
   public static void main(String[] args) {

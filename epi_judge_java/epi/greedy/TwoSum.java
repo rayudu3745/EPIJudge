@@ -1,4 +1,4 @@
-package epi;
+package epi.greedy;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 
@@ -7,8 +7,18 @@ public class TwoSum {
   @EpiTest(testDataFile = "two_sum.tsv")
 
   public static boolean hasTwoSum(List<Integer> A, int t) {
-    // TODO - you fill in here.
-    return true;
+    int i = 0 , j = A.size() - 1;
+    while (i <= j){
+      int sum = A.get(i) + A.get(j);
+      if (sum > t){
+        j  = j - 1;
+      }else if (sum < t){
+        i = i + 1;
+      }else {
+        return true;
+      }
+    }
+    return false;
   }
 
   public static void main(String[] args) {
