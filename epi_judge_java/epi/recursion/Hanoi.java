@@ -1,4 +1,4 @@
-package epi;
+package epi.recursion;
 import epi.test_framework.EpiTest;
 import epi.test_framework.GenericTest;
 import epi.test_framework.TestFailure;
@@ -14,9 +14,20 @@ public class Hanoi {
   private static final int NUM_PEGS = 3;
 
   public static List<List<Integer>> computeTowerHanoi(int numRings) {
-    // TODO - you fill in here.
-    return Collections.emptyList();
+    List<List<Integer>> result = new ArrayList<>();
+    recurse(numRings, 0, 1, 2 , result);
+    return result;
   }
+
+
+  public static void recurse(int numRings, int from, int to, int use, List<List<Integer>> result){
+    if (numRings > 0){
+      recurse(numRings - 1, from, use, to, result);
+      result.add(List.of(from, to));
+      recurse(numRings - 1, use, to , from, result);
+    }
+  }
+
   @EpiTest(testDataFile = "hanoi.tsv")
   public static void computeTowerHanoiWrapper(TimedExecutor executor,
                                               int numRings) throws Exception {
